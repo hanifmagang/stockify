@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call(Settings::class);
         $this->call(Dataawal::class);
         $this->call(CategoryAwal::class);
         $this->call(SupplierAwal::class);

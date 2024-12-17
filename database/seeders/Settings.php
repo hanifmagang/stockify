@@ -20,7 +20,7 @@ class Settings extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
-            ];
+        ];
         foreach ($setting as $settingData) {
             Setting::create($settingData);
         }

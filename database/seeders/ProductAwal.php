@@ -106,7 +106,7 @@ class ProductAwal extends Seeder
                 'sku' => 'PS123',
                 'stock' => '0',
                 'stockMinimum' => '30',
-                'description' => 'nulis.',
+                'description' => 'nuliss.',
                 'purchase_price' => '4000',
                 'selling_price' => '6000',
                 'image' => 'images/product/pensil.png',

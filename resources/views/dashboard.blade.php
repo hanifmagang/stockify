@@ -43,7 +43,7 @@ use Carbon\Carbon; // Mengimpor Carbon
           </svg>
       </div>
   </div>
-    <div class="mt-6 grid gap-4 xl:grid-cols-2 2xl:grid-cols-9">
+    <div class="mt-6 grid gap-4 xl:grid-cols-2 cols-9">
       <!-- Main widget -->
       <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
         <div class="flex items-center justify-between mb-4">
@@ -101,7 +101,7 @@ use Carbon\Carbon; // Mengimpor Carbon
           </div>
         </div>
       </div>
-      <!--Tabs widget -->
+      
     </div>
 
 </div>

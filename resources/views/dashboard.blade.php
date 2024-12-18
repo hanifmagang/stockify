@@ -24,7 +24,7 @@ use Carbon\Carbon; // Mengimpor Carbon
               <path d="M19 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1ZM2 6v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H2Zm11 3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0h2a1 1 0 0 1 2 0v1Z"/>
           </svg>
       </div>
-      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-60"> <!-- Menambahkan h-40 -->
+      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-40"> <!-- Menambahkan h-40 -->
           <div class="w-full">
               <h3 class="text-xl font-bold leading-none text-gray-900 sm:text-xl dark:text-white">Transaksi Masuk</h3>
               <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $totalTransIn }}</span>
@@ -33,7 +33,7 @@ use Carbon\Carbon; // Mengimpor Carbon
             <path d="M10 16l7-7h-4V0H7v9H3z"/> 
         </svg>
       </div>
-      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-60"> <!-- Menambahkan h-40 -->
+      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-40"> <!-- Menambahkan h-40 -->
           <div class="w-full">
               <h3 class="text-xl font-bold leading-none text-gray-900 sm:text-xl dark:text-white">Transaksi Keluar</h3>
               <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $totalTransOut }}</span>

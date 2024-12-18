@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\StockOpname;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductAwal extends Seeder
 {
@@ -115,7 +117,36 @@ class ProductAwal extends Seeder
             ]
         ];
         foreach ($product as $productData) {
-            Product::create($productData);
+            // Copy gambar ke storage/public jika belum ada
+            $sourcePath = public_path($productData['image']);
+            $targetPath = 'public/' . $productData['image'];
+            
+            if (!Storage::exists($targetPath)) {
+                Storage::put($targetPath, file_get_contents($sourcePath));
+            }
+
+            // Simpan data produk ke database
+            $createdProduct = Product::create([
+                'category_id' => $productData['category_id'],
+                'supplier_id' => $productData['supplier_id'],
+                'name' => $productData['name'],
+                'sku' => $productData['sku'],
+                'stock' => $productData['stock'],
+                'stockMinimum' => $productData['stockMinimum'],
+                'description' => $productData['description'],
+                'purchase_price' => $productData['purchase_price'],
+                'selling_price' => $productData['selling_price'],
+                'image' => $productData['image'], // Simpan path relatif
+            ]);
+
+            StockOpname::create([
+                'product_id' => $createdProduct->id,
+                'category_id' => $createdProduct->category_id,
+                'masuk' => 0, // Atur sesuai kebutuhan
+                'keluar' => 0, // Atur sesuai kebutuhan
+                'stock_akhir' => $createdProduct->stock, // Atur sesuai kebutuhan
+                'date' => now(), // Atur tanggal sesuai kebutuhan
+            ]);
         }
     }
     

@@ -12,12 +12,12 @@ class ProductImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $product = Product::create([
-            'category_id' => $row['category_id'],
-            'supplier_id' => $row['supplier_id'],
+            'category_id' => $row['category'],
+            'supplier_id' => $row['supplier'],
             'name' => $row['name'],
             'sku' => $row['sku'],
             'stock' => $row['stock'],
-            'stockMinimum' => $row['stockMinimum'],
+            'stockMinimum' => isset($row['stockMinimum']) ? $row['stockMinimum'] : 0,
             'description' => $row['description'],
             'purchase_price' => $row['purchase_price'],
             'selling_price' => $row['selling_price'],

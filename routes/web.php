@@ -116,6 +116,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/laporan/transaction/export/pdf/{type}', [LaporanController::class, 'exportToPDF'])->name('laporan.transaction.export.pdf');
         Route::get('/laporan/stock/export/excel', [LaporanStockController::class, 'exportExcel'])->name('laporan.stock.export.excel');
         Route::get('/laporan/stock/export/pdf', [LaporanStockController::class, 'exportPDF'])->name('laporan.stock.export.pdf');
+        Route::get('/laporan/activity/export/excel', [ActivityController::class, 'exportToExcel'])->name('exportExcel');
+        Route::get('/laporan/activity/export/pdf', [ActivityController::class, 'exportToPDF'])->name('exportPdf');
     });
 
     Route::middleware(['check', 'role:Admin'])->group(function(){

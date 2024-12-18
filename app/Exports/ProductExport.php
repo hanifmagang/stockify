@@ -11,28 +11,28 @@ class ProductExport implements FromCollection, WithHeadings
     public function collection()
     {
         return Product::with('category', 'supplier')->get()->map(function ($product) {
-            return $product->only([
-                'category_id',
-                'supplier_id',
-                'name',
-                'sku',
-                'stock',
-                'stockMinimum',
-                'description',
-                'purchase_price',
-                'selling_price',
-                'image',
-                'created_at',
-                'updated_at',
-            ]);
+            return [
+                'category' => $product->category->name, // Ubah dari category_id menjadi nama kategori
+                'supplier' => $product->supplier->name, // Ubah dari supplier_id menjadi nama supplier
+                'name' => $product->name,
+                'sku' => $product->sku,
+                'stock' => $product->stock,
+                'stockMinimum' => $product->stockMinimum,
+                'description' => $product->description,
+                'purchase_price' => $product->purchase_price,
+                'selling_price' => $product->selling_price,
+                'image' => $product->image,
+                'created_at' => $product->created_at,
+                'updated_at' => $product->updated_at,
+            ];
         });
     }
 
     public function headings(): array
     {
         return [
-            'category_id',
-            'supplier_id',
+            'category',
+            'supplier',
             'name',
             'sku',
             'stock',

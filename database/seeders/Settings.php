@@ -16,7 +16,7 @@ class Settings extends Seeder
         $setting = [
             [
                 'app_name' => 'LadyBug',
-                'logo' => 'storage/app/public/images/settings/ladybug.png',
+                'logo' => 'images/settings/ladybug.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

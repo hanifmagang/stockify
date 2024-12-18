@@ -52,7 +52,7 @@
     <h3 class="mb-4 text-xl font-semibold dark:text-white">{{ $product->name }}</h3>
     <form action="#"></form>
         <div class="grid grid-cols-6 gap-6">
-            <div class="col-span-6 sm:col-span-2">
+            <div class="col-span-6 sm:col-span-6">
                     @if($product['image'])
                         <img src="{{ asset('storage/' . $product['image']) }}" alt="{{ $product['name'] }}" style="width: 200px; height: 200px; object-fit: cover;">
                     @else

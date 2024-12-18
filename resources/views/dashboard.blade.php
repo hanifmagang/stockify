@@ -61,7 +61,7 @@ use Carbon\Carbon; // Mengimpor Carbon
         </div>
         <canvas id="stockChart" width="200px" height="75px"></canvas>
         <!-- Card Footer -->
-        <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
+        {{-- <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
           <div>
             <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="weekly-sales-dropdown">Last 7 days <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
             <!-- Dropdown menu -->
@@ -99,7 +99,7 @@ use Carbon\Carbon; // Mengimpor Carbon
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </a>
           </div>
-        </div>
+        </div> --}}
       </div>
       
     </div>
@@ -191,7 +191,7 @@ use Carbon\Carbon; // Mengimpor Carbon
           </div>
         </div>
       </div>
-      <!-- Card Footer -->
+      {{-- <!-- Card Footer -->
       @if(auth()->user()->role === 'Admin')
       <div class="flex items-center justify-between pt-3 sm:pt-6">
         <div>
@@ -229,7 +229,7 @@ use Carbon\Carbon; // Mengimpor Carbon
           </a>
         </div>
       </div>
-      @endif
+      @endif --}}
     </div>
   </div>
 </div>
@@ -437,7 +437,7 @@ use Carbon\Carbon; // Mengimpor Carbon
       @if(auth()->user()->role === 'Admin')
       <div class="flex items-center justify-between pt-3 sm:pt-6">
         <div>
-          <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="transactions-dropdown">Last 7 days <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          {{-- <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="transactions-dropdown">Last 7 days <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
           <!-- Dropdown menu -->
           <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="transactions-dropdown">
               <div class="px-4 py-3" role="none">
@@ -462,10 +462,10 @@ use Carbon\Carbon; // Mengimpor Carbon
               <div class="py-1" role="none">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Custom...</a>
               </div>
-          </div>
+          </div> --}}
         </div>
         <div class="flex-shrink-0">
-          <a href="#" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
+          <a href="{{ route('laporan.stock.tampil') }}" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
           Transactions Report
             <svg class="w-4 h-4 ml-1 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>

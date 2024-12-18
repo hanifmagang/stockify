@@ -15,7 +15,7 @@ use Carbon\Carbon; // Mengimpor Carbon
 @if (auth()->user()->role === 'Admin')
 <div class="px-4 pt-9">
     <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-60"> <!-- Menambahkan h-40 -->
+      <div class="items-center justify-between p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-8 dark:bg-gray-800 h-40"> <!-- Menambahkan h-40 -->
           <div class="w-full">
               <h3 class="text-xl font-bold leading-none text-gray-900 sm:text-xl dark:text-white">Jumlah Product</h3>
               <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $totalProduct }}</span>
@@ -43,7 +43,7 @@ use Carbon\Carbon; // Mengimpor Carbon
           </svg>
       </div>
   </div>
-    <div class="mt-6 grid gap-4 xl:grid-cols-2 2xl:grid-cols-6">
+    <div class="mt-6 grid gap-4 xl:grid-cols-2 2xl:grid-cols-9">
       <!-- Main widget -->
       <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
         <div class="flex items-center justify-between mb-4">
@@ -59,7 +59,7 @@ use Carbon\Carbon; // Mengimpor Carbon
             </select>
           </div>
         </div>
-        <canvas id="stockChart" width="200" height="75px"></canvas>
+        <canvas id="stockChart" width="200px" height="75px"></canvas>
         <!-- Card Footer -->
         <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
           <div>

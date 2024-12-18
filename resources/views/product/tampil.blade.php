@@ -15,7 +15,7 @@
         const productRow = document.querySelector(`tr[data-product-id="${id}"]`);
         const productImage = productRow.querySelector('.product-image').innerText;
         const productSKU = productRow.querySelector('.product-sku').innerText;
-        const productMinimum = productRow.querySelector('.product-stockMinimum').innerText;
+        const productstockMinimum = productRow.querySelector('.product-stockMinimum').innerText;
         const productCategoryID = productRow.querySelector('.product-category_id').innerText;
         const productSupplierID = productRow.querySelector('.product-supplier_id').innerText;
         const productName = productRow.querySelector('.product-name').innerText;
@@ -30,7 +30,7 @@
         document.querySelector('#edit-user-modal select[name="category_id"]').value = productRow.getAttribute('data-category-id');
         document.querySelector('#edit-user-modal select[name="supplier_id"]').value = productRow.getAttribute('data-supplier-id');
         document.querySelector('#edit-user-modal input[name="name"]').value = productName;
-        document.querySelector('#edit-user-modal input[name="stockMinimum"]').value = productMinimum;
+        document.querySelector('#edit-user-modal input[name="stockMinimum"]').value = productstockMinimum;
         document.querySelector('#edit-user-modal textarea[name="description"]').value = productDescription;
         document.querySelector('#edit-user-modal input[name="purchase_price"]').value = productPurchasePrice;
         document.querySelector('#edit-user-modal input[name="selling_price"]').value = productSellingPrice;

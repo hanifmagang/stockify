@@ -4,7 +4,7 @@
 
 
 <script>
-    const products = `<?php echo $products; ?>`
+    const products = `<?php echo $product; ?>`
     function setEditProduct(id) {
         let parsedProducts
         parsedProducts = JSON.parse(products);
@@ -12,28 +12,30 @@
 
         if (productById) {
         // Mengambil data product dari tabel
-        const productRow = document.querySelector(`tr[data-product-id="${id}"]`);
-        const productImage = productRow.querySelector('.product-image').innerText;
-        const productSKU = productRow.querySelector('.product-sku').innerText;
-        const productstockMinimum = productRow.querySelector('.product-stockMinimum').innerText;
-        const productCategoryID = productRow.querySelector('.product-category_id').innerText;
-        const productSupplierID = productRow.querySelector('.product-supplier_id').innerText;
-        const productName = productRow.querySelector('.product-name').innerText;
-        const productDescription = productRow.querySelector('.product-description').innerText;
-        const productPurchasePrice = productRow.querySelector('.product-purchase_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
-        const productSellingPrice = productRow.querySelector('.product-selling_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
+        const userRow = document.querySelector(`tr[data-product-id="${id}"]`);
+        const userImage = userRow.querySelector('.product-image').innerText;
+        const userSKU = userRow.querySelector('.product-sku').innerText;
+        const userCategoryID = userRow.querySelector('.product-category_id').innerText;
+        const userSupplierID = userRow.querySelector('.product-supplier_id').innerText;
+        const userName = userRow.querySelector('.product-name').innerText;
+        const userStock = userRow.querySelector('.product-stock').innerText;
+        const userStockMin = userRow.querySelector('.product-stockMinimum').innerText;
+        const userDescription = userRow.querySelector('.product-description').innerText;
+        const userPurchasePrice = userRow.querySelector('.product-purchase_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
+        const userSellingPrice = userRow.querySelector('.product-selling_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
 
         // Mengisi modal dengan data product
         const imageElement = document.querySelector('#edit-user-modal img[name="image"]');
         imageElement.src = '/storage/' + productById.image
-        document.querySelector('#edit-user-modal input[name="sku"]').value = productSKU;
-        document.querySelector('#edit-user-modal select[name="category_id"]').value = productRow.getAttribute('data-category-id');
-        document.querySelector('#edit-user-modal select[name="supplier_id"]').value = productRow.getAttribute('data-supplier-id');
-        document.querySelector('#edit-user-modal input[name="name"]').value = productName;
-        document.querySelector('#edit-user-modal input[name="stockMinimum"]').value = productstockMinimum;
-        document.querySelector('#edit-user-modal textarea[name="description"]').value = productDescription;
-        document.querySelector('#edit-user-modal input[name="purchase_price"]').value = productPurchasePrice;
-        document.querySelector('#edit-user-modal input[name="selling_price"]').value = productSellingPrice;
+        document.querySelector('#edit-user-modal input[name="sku"]').value = userSKU;
+        document.querySelector('#edit-user-modal select[name="category_id"]').value = userRow.getAttribute('data-category-id');
+        document.querySelector('#edit-user-modal select[name="supplier_id"]').value = userRow.getAttribute('data-supplier-id');
+        document.querySelector('#edit-user-modal input[name="name"]').value = userName;
+        document.querySelector('#edit-user-modal input[name="stock"]').value = userStock;
+        document.querySelector('#edit-user-modal input[name="stockMinimum"]').value = userStockMin;
+        document.querySelector('#edit-user-modal textarea[name="description"]').value = userDescription;
+        document.querySelector('#edit-user-modal input[name="purchase_price"]').value = userPurchasePrice;
+        document.querySelector('#edit-user-modal input[name="selling_price"]').value = userSellingPrice;
         document.querySelector('#edit-user-modal form').action = `/product/update${id}`;
         }
     }
@@ -43,6 +45,8 @@
         deleteForm.action = `/product/delete${id}`;
     }
 </script>
+
+
 
 <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
     <div class="w-full mb-1">
@@ -169,7 +173,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                        @foreach($products as $index => $product)
+                        @foreach($product as $index => $product)
                         @if (strpos(strtolower($product['name']), strtolower(request('search', ''))) !== false)
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700" data-product-id={{ $product['id'] }} data-category-id={{ $product->category->id }} data-supplier-id={{ $product->supplier->id }}>
                             <td class="w-4 p-4">
@@ -230,7 +234,7 @@
         </div>
     </div>
 </div>
-<div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
+{{-- <div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
     <div class="flex items-center mb-4 sm:mb-0">
         <a href="{{ $products->previousPageUrl() }}" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
@@ -275,7 +279,7 @@
             Last
         </a>
     </div>
-</div>
+</div> --}}
 
 
 

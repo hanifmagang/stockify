@@ -19,8 +19,10 @@ class ProductController extends Controller
     function tampil(){
         $cat = Category::all();
         $supp = Supplier::all();
-        $products = Product::with('category','supplier')->paginate(20);
-        return view('product.tampil', compact('products','cat', 'supp'));
+        
+        $product = Product::with('category','supplier')->get();
+        
+        return view('product.tampil', compact('product','cat', 'supp'));
     }
     
     public function tambah(){
@@ -150,7 +152,7 @@ class ProductController extends Controller
 
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah melakukan export produk', 
+            'activity' => 'User telah menghapus produk ' .$product->name, 
         ]);
         return redirect()->route('product.tampil');
     }

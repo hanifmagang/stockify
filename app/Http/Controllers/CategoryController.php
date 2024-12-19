@@ -24,7 +24,7 @@ class CategoryController extends Controller
     {
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menambahkan category baru', 
+            'activity' => 'User telah menambahkan data category baru', 
         ]);
         
         $validatedData = Validator::make($request->all(),[

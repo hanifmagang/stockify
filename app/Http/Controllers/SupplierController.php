@@ -24,7 +24,7 @@ class SupplierController extends Controller
         
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menambahkan supplier baru', 
+            'activity' => 'User telah menambahkan data supplier baru', 
         ]);
         $validatedData = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
@@ -94,7 +94,7 @@ class SupplierController extends Controller
 
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menghapus data supplier' .$supplier->name, 
+            'activity' => 'User telah menghapus data supplier ' .$supplier->name, 
         ]);
 
         return redirect()->route('supplier.tampil');

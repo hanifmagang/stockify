@@ -386,6 +386,8 @@ use Carbon\Carbon; // Mengimpor Carbon
                   @endif
                   @endif
                   @if(auth()->user()->role === 'Manajer Gudang')
+                  @if(($transaction['type'] === 'Masuk' && $transaction['status'] === 'Diterima') || 
+                    ($transaction['type'] === 'Keluar' && $transaction['status'] === 'Dikeluarkan'))
                   @if(\Carbon\Carbon::parse($transaction['date'])->isToday())
                   <tr>
                     <td class="p-4 text-sm font-semibold text-gray-900 whitespace-nowrap dark:text-white">
@@ -422,6 +424,7 @@ use Carbon\Carbon; // Mengimpor Carbon
                       @endif
                     </td>
                   </tr>
+                  @endif
                   @endif
                   @endif
                   @endforeach

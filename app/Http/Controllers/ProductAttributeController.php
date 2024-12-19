@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductAttribute;
+use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Models\ProductAttribute;
+use Illuminate\Support\Facades\Auth;
 
 class ProductAttributeController extends Controller
 {
@@ -31,6 +33,10 @@ class ProductAttributeController extends Controller
             'name' => $request->name,
             'value' => $request->value,
 
+        ]);
+        Activity::create([
+            'user_id' => Auth::id(),
+            'activity' => 'User telah menambahkan produk attribute baru', 
         ]);
 
         return redirect()->route('product.detail.tampil', ['id' => $request->product_id])->with('success', 'Atribut produk berhasil ditambahkan.');

@@ -90,65 +90,63 @@ class ProductController extends Controller
     }
     function update(Request $request, $id){
         $product = Product::find($id);
-        $oldData = $product->replicate();
+        $changes = [];
 
-        $product->category_id = $request->category_id;
-        $product->supplier_id = $request->supplier_id;
-        $product->name = $request->name;
-        $product->sku = $request->sku;
-        $product->description = $request->description;
-        $product->purchase_price = $request->purchase_price;
-        $product->selling_price = $request->selling_price;
-        $product->stockMinimum = $request->stockMinimum;
+        // Cek perubahan untuk setiap field dan tambahkan ke array changes jika ada perubahan
+        if ($product->category_id != $request->category_id) {
+            $changes['kategori'] = $request->category_id;
+        }
+        if ($product->supplier_id != $request->supplier_id) {
+            $changes['supplier'] = $request->supplier_id;
+        }
+        if ($product->name != $request->name) {
+            $changes['nama'] = $request->name;
+        }
+        if ($product->sku != $request->sku) {
+            $changes['sku'] = $request->sku;
+        }
+        if ($product->description != $request->description) {
+            $changes['deskripsi'] = $request->description;
+        }
+        if ($product->purchase_price != $request->purchase_price) {
+            $changes['harga beli'] = $request->purchase_price;
+        }
+        if ($product->selling_price != $request->selling_price) {
+            $changes['harga jual'] = $request->selling_price;
+        }
+        if ($product->stockMinimum != $request->stockMinimum) {
+            $changes['stockMinimum'] = $request->stockMinimum;
+        }
+
+        // Update product dengan data baru
+        $product->update($request->all());
+
         // Upload image jika ada
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images/product', 'public');
             $product->image = $imagePath; // Update image path
-        }
-        $product->save(); // Simpan perubahan
-
-        // Cek perubahan dan catat aktivitas
-        $changes = [];
-        if ($oldData->category_id !== $product->category_id) {
-            $changes[] = 'category';
-        }
-        if ($oldData->supplier_id !== $product->supplier_id) {
-            $changes[] = 'supplier';
-        }
-        if ($oldData->name !== $product->name) {
-            $changes[] = 'nama';
-        }
-        if ($oldData->sku !== $product->sku) {
-            $changes[] = 'sku';
-        }
-        if ($oldData->purchase_price !== $product->purchase_price) {
-            $changes[] = 'harga beli';
-        }
-        if ($oldData->selling_price !== $product->selling_price) {
-            $changes[] = 'harga jual';
-        }
-        if ($oldData->description !== $product->description) {
-            $changes[] = 'deskripsi';
-        }
-        if ($oldData->image !== $product->image) {
-            $changes[] = 'gambar';
-        }
-        if ($oldData->stockMinimum !== $product->stockMinimum) {
-            $changes[] = 'stock minimum';
+            $changes['gambar'] = 'Image updated';
         }
 
-        // Hanya catat aktivitas jika ada perubahan
+        // Simpan perubahan
+        $product->save();
+
+        // Catat perubahan ke Activity
         if (!empty($changes)) {
+            $changeText = 'User telah mengubah ' . implode(', ', array_keys($changes)) . ' pada produk ' . $product->name;
             Activity::create([
                 'user_id' => Auth::id(),
-                'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada produk ' . $product->name, 
+                'activity' => $changeText, 
             ]);
         }
 
         // Update StockOpname jika kategori berubah
-        StockOpname::where('product_id', $product->id)->update([
-            'category_id' => $product->category_id,
-        ]);
+        if (array_key_exists('category_id', $changes)) {
+            StockOpname::where('product_id', $product->id)->update([
+                'category_id' => $product->category_id,
+            ]);
+        }
+
         return redirect()->route('product.tampil');
     }
 

@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware(['role:Admin'])->group(function(){
         Route::get('/product/tambah', [ProductController::class, 'tambah'])->name('product.tambah');
         Route::post('/product/submit', [ProductController::class, 'submit'])->name('product.submit');
-        Route::get('product/edit{id}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::get('product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
         Route::post('product/update{id}', [ProductController::class, 'update'])->name('product.update');
         Route::post('product/delete{id}', [ProductController::class, 'delete'])->name('product.delete');
         Route::get('/product/export/excel', [ProductController::class, 'exportToExcel'])->name('product.export.excel');

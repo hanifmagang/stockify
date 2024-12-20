@@ -15,7 +15,8 @@ class UserController extends Controller
 
     function tampil(){
         $users = User::paginate(20); 
-        return view('user.tampil', compact('users')); 
+        $roles = User::select('role')->distinct()->pluck('role');
+        return view('user.tampil', compact('users', 'roles')); 
     }
     function tambah(){
         return view('user.tambah');
@@ -23,7 +24,7 @@ class UserController extends Controller
     function submit(Request $request){
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menambahkan data pengguna', 
+            'activity' => 'User telah menambahkan data pengguna baru ', 
         ]);
         $validatedData = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
@@ -53,21 +54,42 @@ class UserController extends Controller
 
         return view('user.edit', compact('user'));
     }
-    function update(Request$request, $id){
-        $users = User::find($id);
-        
-        if ($request->has('password')) {
-            $users->password = Hash::make($request->password);
-        }
-        $users->name = $request->name;
-        $users->email = $request->email;
-        $users->role = $request->role;
-        $users->update();
+    function update(Request $request, $id){
+        $user = User::find($id);
+        $oldData = $user->replicate();
 
-        Activity::create([
-            'user_id' => Auth::id(),
-            'activity' => 'User telah mengedit data pengguna dengan nama '. $users->name, 
-        ]);
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->update();
+
+        if ($oldData->name !== $user->name && $oldData->email === $user->email && $oldData->role === $user->role) {
+            Activity::create([
+                'user_id' => Auth::id(),
+                'activity' => 'User telah mengubah nama user dari ' . $oldData->name . ' menjadi ' . $user->name . '', 
+            ]);
+        } else {
+            $changes = [];
+            if ($oldData->name !== $user->name) {
+                $changes[] = 'nama';
+            }
+            if ($oldData->email !== $user->email) {
+                $changes[] = 'email';
+            }
+            if ($oldData->role !== $user->role) {
+                $changes[] = 'role';
+            }
+
+            if (!empty($changes)) {
+                Activity::create([
+                    'user_id' => Auth::id(),
+                    'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada user ' . $user->name, 
+                ]);
+            }
+        }
 
         return redirect()->route('user.tampil');
     }

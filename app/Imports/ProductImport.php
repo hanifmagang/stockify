@@ -17,7 +17,7 @@ class ProductImport implements ToModel, WithHeadingRow
             'name' => $row['name'],
             'sku' => $row['sku'],
             'stock' => $row['stock'],
-            'stockMinimum' => isset($row['stockMinimum']) ? $row['stockMinimum'] : 0,
+            'stockMinimum' => $row['stockminimum'],
             'description' => $row['description'],
             'purchase_price' => $row['purchase_price'],
             'selling_price' => $row['selling_price'],

@@ -21,8 +21,9 @@ class ProductController extends Controller
         $supp = Supplier::all();
         
         $product = Product::with('category','supplier')->get();
+        $products = Product::paginate(20);
         
-        return view('product.tampil', compact('product','cat', 'supp'));
+        return view('product.tampil', compact('product', 'products', 'cat', 'supp'));
     }
     
     public function tambah(){
@@ -99,30 +100,28 @@ class ProductController extends Controller
         $product->purchase_price = $request->purchase_price;
         $product->selling_price = $request->selling_price;
         $product->stockMinimum = $request->stockMinimum;
-
         // Upload image jika ada
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images/product', 'public');
             $product->image = $imagePath; // Update image path
         }
-
         $product->save(); // Simpan perubahan
 
         // Cek perubahan dan catat aktivitas
         $changes = [];
-        if ($oldData->name !== $product->name) {
-            $changes[] = 'nama';
-        }
         if ($oldData->category_id !== $product->category_id) {
             $changes[] = 'category';
         }
         if ($oldData->supplier_id !== $product->supplier_id) {
             $changes[] = 'supplier';
         }
-        if ($oldData->stockMinimum !== $product->stockMinimum) {
-            $changes[] = 'stock minimum';
+        if ($oldData->name !== $product->name) {
+            $changes[] = 'nama';
         }
-        if ($oldData->purchasae_price !== $product->purchasae_price) {
+        if ($oldData->sku !== $product->sku) {
+            $changes[] = 'sku';
+        }
+        if ($oldData->purchase_price !== $product->purchase_price) {
             $changes[] = 'harga beli';
         }
         if ($oldData->selling_price !== $product->selling_price) {
@@ -134,12 +133,22 @@ class ProductController extends Controller
         if ($oldData->image !== $product->image) {
             $changes[] = 'gambar';
         }
+        if ($oldData->stockMinimum !== $product->stockMinimum) {
+            $changes[] = 'stock minimum';
+        }
+
+        // Hanya catat aktivitas jika ada perubahan
         if (!empty($changes)) {
             Activity::create([
                 'user_id' => Auth::id(),
                 'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada produk ' . $product->name, 
             ]);
         }
+
+        // Update StockOpname jika kategori berubah
+        StockOpname::where('product_id', $product->id)->update([
+            'category_id' => $product->category_id,
+        ]);
         return redirect()->route('product.tampil');
     }
 

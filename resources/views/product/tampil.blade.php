@@ -12,37 +12,42 @@
 
         if (productById) {
         // Mengambil data product dari tabel
-        const userRow = document.querySelector(`tr[data-product-id="${id}"]`);
-        const userImage = userRow.querySelector('.product-image').innerText;
-        const userSKU = userRow.querySelector('.product-sku').innerText;
-        const userCategoryID = userRow.querySelector('.product-category_id').innerText;
-        const userSupplierID = userRow.querySelector('.product-supplier_id').innerText;
-        const userName = userRow.querySelector('.product-name').innerText;
-        const userStock = userRow.querySelector('.product-stock').innerText;
-        const userStockMin = userRow.querySelector('.product-stockMinimum').innerText;
-        const userDescription = userRow.querySelector('.product-description').innerText;
-        const userPurchasePrice = userRow.querySelector('.product-purchase_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
-        const userSellingPrice = userRow.querySelector('.product-selling_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
+        const productRow = document.querySelector(`tr[data-product-id="${id}"]`);
+        const productImage = productRow.querySelector('.product-image').innerText;
+        const productSKU = productRow.querySelector('.product-sku').innerText;
+        const productCategoryID = productRow.querySelector('.product-category_id').innerText;
+        const productSupplierID = productRow.querySelector('.product-supplier_id').innerText;
+        const productName = productRow.querySelector('.product-name').innerText;
+        const productStock = productRow.querySelector('.product-stock').innerText;
+        const productStockMin = productRow.querySelector('.product-stockMinimum').innerText;
+        const productDescription = productRow.querySelector('.product-description').innerText;
+        const productPurchasePrice = productRow.querySelector('.product-purchase_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
+        const productSellingPrice = productRow.querySelector('.product-selling_price').innerText.replace(/[^0-9,-]+/g,"").replace(',', '.').replace(/\.00$/, '').replace('.', '');
 
         // Mengisi modal dengan data product
-        const imageElement = document.querySelector('#edit-user-modal img[name="image"]');
+        const imageElement = document.querySelector('#edit-product-modal img[name="image"]');
         imageElement.src = '/storage/' + productById.image
-        document.querySelector('#edit-user-modal input[name="sku"]').value = userSKU;
-        document.querySelector('#edit-user-modal select[name="category_id"]').value = userRow.getAttribute('data-category-id');
-        document.querySelector('#edit-user-modal select[name="supplier_id"]').value = userRow.getAttribute('data-supplier-id');
-        document.querySelector('#edit-user-modal input[name="name"]').value = userName;
-        document.querySelector('#edit-user-modal input[name="stock"]').value = userStock;
-        document.querySelector('#edit-user-modal input[name="stockMinimum"]').value = userStockMin;
-        document.querySelector('#edit-user-modal textarea[name="description"]').value = userDescription;
-        document.querySelector('#edit-user-modal input[name="purchase_price"]').value = userPurchasePrice;
-        document.querySelector('#edit-user-modal input[name="selling_price"]').value = userSellingPrice;
-        document.querySelector('#edit-user-modal form').action = `/product/update${id}`;
+        document.querySelector('#edit-product-modal input[name="sku"]').value = productSKU;
+        document.querySelector('#edit-product-modal select[name="category_id"]').value = productRow.getAttribute('data-category-id');
+        document.querySelector('#edit-product-modal select[name="supplier_id"]').value = productRow.getAttribute('data-supplier-id');
+        document.querySelector('#edit-product-modal input[name="name"]').value = productName;
+        document.querySelector('#edit-product-modal input[name="stock"]').value = productStock;
+        document.querySelector('#edit-product-modal input[name="stockMinimum"]').value = productStockMin;
+        document.querySelector('#edit-product-modal textarea[name="description"]').value = productDescription;
+        document.querySelector('#edit-product-modal input[name="purchase_price"]').value = productPurchasePrice;
+        document.querySelector('#edit-product-modal input[name="selling_price"]').value = productSellingPrice;
+        document.querySelector('#edit-product-modal form').action = `/product/update${id}`;
         }
     }
     function setDeleteProduct(id) {
         // Mengatur action form delete dengan ID product yang akan dihapus
-        const deleteForm = document.querySelector('#delete-user-modal form');
+        const deleteForm = document.querySelector('#delete-product-modal form');
         deleteForm.action = `/product/delete${id}`;
+
+        const productRow = document.querySelector(`tr[data-product-id="${id}"]`);
+        const productName = productRow.querySelector('.product-name').innerText;
+
+        document.querySelector('#delete-product-modal #product-name').innerText = productName;
     }
 </script>
 
@@ -101,7 +106,7 @@
             @if(auth()->user()->role === 'Admin')
             <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                 
-                <button type="button" data-modal-target="add-user-modal" data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                <button type="button" data-modal-target="add-product-modal" data-modal-toggle="add-product-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                     <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                     Add product
                 </button>
@@ -215,11 +220,11 @@
                                     Detail
                                 </a>
                                 @if(auth()->user()->role === 'Admin')
-                                <button type="button" data-modal-target="edit-user-modal" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onclick="setEditProduct({{ $product['id'] }})">
+                                <button type="button" data-modal-target="edit-product-modal" data-modal-toggle="edit-product-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onclick="setEditProduct({{ $product['id'] }})">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                                     Edit product
                                 </button>
-                                <button type="button" data-modal-target="delete-user-modal" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900" onclick="setDeleteProduct({{ $product['id'] }})">
+                                <button type="button" data-modal-target="delete-product-modal" data-modal-toggle="delete-product-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900" onclick="setDeleteProduct({{ $product['id'] }})">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                     Delete product
                                 </button>
@@ -234,7 +239,7 @@
         </div>
     </div>
 </div>
-{{-- <div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
+<div class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
     <div class="flex items-center mb-4 sm:mb-0">
         <a href="{{ $products->previousPageUrl() }}" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
@@ -279,7 +284,7 @@
             Last
         </a>
     </div>
-</div> --}}
+</div>
 
 
 

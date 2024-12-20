@@ -105,6 +105,9 @@
                                 Product
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Category
+                            </th>
+                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 User
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -135,6 +138,7 @@
                                 </div>
                             </td>
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-product_id">{{ $transaction->product->name }}</td>
+                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-product_id">{{ $transaction->product->category->name }}</td>
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-user_id">{{ $transaction->user->name }}</td>
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap mt-2 transaction-type">
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $transaction['type'] }}</div>

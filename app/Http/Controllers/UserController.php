@@ -66,27 +66,31 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->update();
 
-        if ($oldData->name !== $user->name && $oldData->email === $user->email && $oldData->role === $user->role) {
-            Activity::create([
-                'user_id' => Auth::id(),
-                'activity' => 'User telah mengubah nama user dari ' . $oldData->name . ' menjadi ' . $user->name . '', 
-            ]);
-        } else {
-            $changes = [];
-            if ($oldData->name !== $user->name) {
-                $changes[] = 'nama';
-            }
-            if ($oldData->email !== $user->email) {
-                $changes[] = 'email';
-            }
-            if ($oldData->role !== $user->role) {
-                $changes[] = 'role';
-            }
+        $changes = [];
+        if ($oldData->email !== $user->email) {
+            $changes[] = 'email';
+        }
+        if ($oldData->role !== $user->role) {
+            $changes[] = 'role';
+        }
 
+        if ($oldData->name !== $user->name) {
+            if (empty($changes)) {
+                Activity::create([
+                    'user_id' => Auth::id(),
+                    'activity' => 'User telah mengubah nama user dari ' . $oldData->name . ' menjadi ' . $user->name,
+                ]);
+            } else {
+                Activity::create([
+                    'user_id' => Auth::id(),
+                    'activity' => 'User telah mengubah nama user dari ' . $oldData->name . ' menjadi ' . $user->name . ', serta mengubah ' . implode(', ', $changes),
+                ]);
+            }
+        } else {
             if (!empty($changes)) {
                 Activity::create([
                     'user_id' => Auth::id(),
-                    'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada user ' . $user->name, 
+                    'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada user ' . $user->name,
                 ]);
             }
         }

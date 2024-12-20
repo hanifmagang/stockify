@@ -47,7 +47,7 @@ class CategoryController extends Controller
         $categories = Category::find($id);
         return view('product.category.edit', compact('categories'));
     }
-    public function update(Request$request, $id){
+    public function update(Request $request, $id){
         $categories = Category::find($id);
         $oldData = $categories->replicate();
 
@@ -63,10 +63,21 @@ class CategoryController extends Controller
             $changes[] = 'deskripsi';
         }
 
-        if (!empty($changes)) {
+        if (count($changes) == 1 && in_array('nama', $changes)) {
             Activity::create([
                 'user_id' => Auth::id(),
-                'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada category ' . $categories->name, 
+                'activity' => 'User telah mengubah nama kategori dari ' . $oldData->name . ' menjadi ' . $categories->name, 
+            ]);
+        } else if (in_array('nama', $changes) && count($changes) > 1) {
+            $otherChanges = array_diff($changes, ['nama']);
+            Activity::create([
+                'user_id' => Auth::id(),
+                'activity' => 'User telah mengubah nama kategori dari ' . $oldData->name . ' menjadi ' . $categories->name . ', serta mengubah ' . implode(', ', $otherChanges),
+            ]);
+        } else {
+            Activity::create([
+                'user_id' => Auth::id(),
+                'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada kategori ' . $categories->name, 
             ]);
         }
 

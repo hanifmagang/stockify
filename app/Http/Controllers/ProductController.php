@@ -100,7 +100,7 @@ class ProductController extends Controller
             $changes['supplier'] = $request->supplier_id;
         }
         if ($product->name != $request->name) {
-            $changes['nama'] = $request->name;
+            $changes['nama'] = ['lama' => $product->name, 'baru' => $request->name];
         }
         if ($product->sku != $request->sku) {
             $changes['sku'] = $request->sku;
@@ -115,7 +115,7 @@ class ProductController extends Controller
             $changes['harga jual'] = $request->selling_price;
         }
         if ($product->stockMinimum != $request->stockMinimum) {
-            $changes['stockMinimum'] = $request->stockMinimum;
+            $changes['stock minimum'] = $request->stockMinimum;
         }
 
         // Update product dengan data baru
@@ -133,7 +133,16 @@ class ProductController extends Controller
 
         // Catat perubahan ke Activity
         if (!empty($changes)) {
-            $changeText = 'User telah mengubah ' . implode(', ', array_keys($changes)) . ' pada produk ' . $product->name;
+            if (isset($changes['nama']) && count($changes) == 1) {
+                $changeText = 'User telah mengubah nama produk dari ' . $changes['nama']['lama'] . ' menjadi ' . $changes['nama']['baru'];
+            } elseif (isset($changes['nama'])) {
+                $otherChanges = $changes;
+                unset($otherChanges['nama']);
+                $otherChangesText = implode(', ', array_keys($otherChanges));
+                $changeText = 'User telah mengubah nama produk dari ' . $changes['nama']['lama'] . ' menjadi ' . $changes['nama']['baru'] . ', serta mengubah ' . $otherChangesText . '';
+            } else {
+                $changeText = 'User telah mengubah ' . implode(', ', array_keys($changes)) . ' pada produk ' . $product->name;
+            }
             Activity::create([
                 'user_id' => Auth::id(),
                 'activity' => $changeText, 

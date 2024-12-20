@@ -79,7 +79,18 @@ class SupplierController extends Controller
             $changes[] = 'nomer hp';
         }
 
-        if (!empty($changes)) {
+        if (count($changes) == 1 && $changes[0] == 'nama') {
+            Activity::create([
+                'user_id' => Auth::id(),
+                'activity' => 'User telah mengubah nama supplier dari ' . $oldData->name . ' menjadi ' . $supplier->name, 
+            ]);
+        } else if (in_array('nama', $changes)) {
+            $otherChanges = array_filter($changes, function($change) { return $change !== 'nama'; });
+            Activity::create([
+                'user_id' => Auth::id(),
+                'activity' => 'User telah mengubah nama supplier ' . $oldData->name . ' menjadi ' . $supplier->name . ', serta mengubah ' . implode(', ', $otherChanges) . '',
+            ]);
+        } else {
             Activity::create([
                 'user_id' => Auth::id(),
                 'activity' => 'User telah mengubah ' . implode(', ', $changes) . ' pada supplier ' . $supplier->name, 

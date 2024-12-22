@@ -8,6 +8,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporanStockController;
 use App\Http\Controllers\ProductAttributeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StockOpnameController;
 use App\Http\Controllers\TransactionController;
@@ -125,11 +126,16 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/laporan/activity/submit', [ActivityController::class, 'submit'])->name('activity.submit');
     });
 
+// Route settings application
     Route::middleware(['check', 'role:Admin'])->group(function(){
         Route::get('/settings', [SettingsController::class, 'tampil'])->name('settings');
         Route::post('/settings/submit', [SettingsController::class, 'submit'])->name('submit');
         Route::post('/settings/update/{id}', [SettingsController::class, 'update'])->name('update');
     });
+
+// Route setting user
+    Route::get('/profile', [ProfileController::class, 'tampil'])->name('profile');
+    Route::post('/profile/update{id}', [ProfileController::class, 'update'])->name('profile.update');
 });
 
     

@@ -502,5 +502,5 @@
         </div>
     </div>
 </div> --}}
-@extends('change')
+@extends('modal.change')
 @endsection

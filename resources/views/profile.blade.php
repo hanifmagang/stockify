@@ -177,7 +177,7 @@
 
 
 </div>
-@include('foto')
+@include('modal.foto')
 @endsection
 
 <script>

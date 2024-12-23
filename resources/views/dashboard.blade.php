@@ -666,7 +666,7 @@ use Carbon\Carbon; // Mengimpor Carbon
   const stockPerMonth = Array(12).fill(0); // Array untuk menyimpan jumlah stok per bulan
 
   transactions.forEach(transaction => {
-      const month = new Date(transaction.updated_at).getMonth(); // Mendapatkan bulan dari tanggal transaksi
+      const month = new Date(transaction.created_at).getMonth(); // Mendapatkan bulan dari tanggal transaksi
       if (transaction.type === 'Masuk' && transaction.status === 'Diterima') {
           stockPerMonth[month] += transaction.quantity; // Menambahkan jumlah untuk transaksi masuk
       } else if (transaction.type === 'Keluar' && transaction.status === 'Dikeluarkan') {

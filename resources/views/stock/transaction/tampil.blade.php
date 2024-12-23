@@ -164,7 +164,7 @@
                             @endif
                             @if(auth()->user()->role === 'Staff Gudang')
                             <td class="p-4 whitespace-nowrap">
-                                <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" name="status" onchange="updateStatus({{ $transaction['id'] }}, this.value)">
+                                <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-24 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" name="status" onchange="updateStatus({{ $transaction['id'] }}, this.value)">
                                     @foreach($status as $stat) 
                                         <option value="{{ $stat }}" {{ $transaction['status'] == $stat ? 'selected' : '' }}>{{ $stat }}</option>
                                     @endforeach

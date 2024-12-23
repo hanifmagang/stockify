@@ -12,8 +12,8 @@ class ProductExport implements FromCollection, WithHeadings
     {
         return Product::with('category', 'supplier')->get()->map(function ($product) {
             return [
-                'category' => $product->category->name, // Ubah dari category_id menjadi nama kategori
-                'supplier' => $product->supplier->name, // Ubah dari supplier_id menjadi nama supplier
+                'category' => $product->category->name, 
+                'supplier' => $product->supplier->name, 
                 'name' => $product->name,
                 'sku' => $product->sku,
                 'stock' => $product->stock,

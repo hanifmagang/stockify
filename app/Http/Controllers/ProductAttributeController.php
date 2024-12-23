@@ -25,20 +25,21 @@ class ProductAttributeController extends Controller
             'product_id' => 'required|exists:product,id',
             'name' => 'required|string|max:255',
             'value' => 'required|string|max:255',
-
         ]);
-
+    
+        $product = Product::findOrFail($request->product_id); 
+    
         ProductAttribute::create([
             'product_id' => $request->product_id,
             'name' => $request->name,
             'value' => $request->value,
-
         ]);
+    
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menambahkan produk attribute baru', 
+            'activity' => 'User telah menambahkan attribute baru pada produk ' . $product->name, 
         ]);
-
+    
         return redirect()->route('product.detail.tampil', ['id' => $request->product_id])->with('success', 'Atribut produk berhasil ditambahkan.');
     }
 }

@@ -24,7 +24,7 @@ class CategoryController extends Controller
     {
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menambahkan data category baru', 
+            'activity' => 'User telah menambahkan data kategori baru', 
         ]);
         
         $validatedData = Validator::make($request->all(),[
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         
         Activity::create([
             'user_id' => Auth::id(),
-            'activity' => 'User telah menghapus data category ' .$categories->name,
+            'activity' => 'User telah menghapus data kategori ' .$categories->name,
         ]);
         
         return redirect()->route('product.category.tampil');

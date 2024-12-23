@@ -16,7 +16,7 @@ class StockOpnameController extends Controller
         $product = Product::all();
         $category = Category::all();
         $transactions = Transaction::all();
-        $stockOpname = StockOpname::with('product', 'category')->get();
+        $stockOpname = StockOpname::with('product', 'category')->paginate(20);
 
         foreach ($stockOpname as $opname) {
             $opname['masuk'] = $transactions->where('type', 'Masuk')

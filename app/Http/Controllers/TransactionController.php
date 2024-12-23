@@ -16,7 +16,7 @@ class TransactionController extends Controller
         $status = ['Pending', 'Diterima', 'Ditolak', 'Dikeluarkan'];
         $transactions = Transaction::with('product','user')
         ->where('type', $type)
-        ->get(); 
+        ->paginate(20); 
         $us = User::all();
         $prod = Product::all();
         return view('stock.transaction.tampil', compact('transactions', 'prod', 'us','type', 'status')); 

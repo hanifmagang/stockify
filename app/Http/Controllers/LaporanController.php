@@ -17,7 +17,7 @@ class LaporanController extends Controller
 
     public function tampil(Request $request, $type)
     {
-        $query = Transaction::with('product', 'user')->where('type', ucfirst($type));
+        $query = Transaction::with('product', 'user')->where('type', ucfirst($type))->orderBy('created_at', 'desc');
 
         // Tambahkan filter berdasarkan tanggal
         if ($request->has('start-date') && $request->has('end-date')) {
@@ -32,7 +32,7 @@ class LaporanController extends Controller
     public function exportToExcel(Request $request, $type)
     {
         $date = now()->format('Y-m-d');
-        $query = Transaction::with('product', 'user')->where('type', ucfirst($type));
+        $query = Transaction::with('product', 'user')->where('type', ucfirst($type))->orderBy('created_at', 'desc');
 
         // Tambahkan filter berdasarkan tanggal
         if ($request->has('start-date') && $request->has('end-date')) {
@@ -52,7 +52,7 @@ class LaporanController extends Controller
     public function exportToPDF(Request $request, $type)
     {
         $date = now()->format('Y-m-d');
-        $query = Transaction::with('product', 'user')->where('type', ucfirst($type));
+        $query = Transaction::with('product', 'user')->where('type', ucfirst($type))->orderBy('created_at', 'desc');
 
         // Tambahkan filter berdasarkan tanggal
         if ($request->has('start-date') && $request->has('end-date')) {

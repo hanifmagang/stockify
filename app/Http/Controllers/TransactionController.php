@@ -15,7 +15,7 @@ class TransactionController extends Controller
     function tampil($type){
         $status = ['Pending', 'Diterima', 'Ditolak', 'Dikeluarkan'];
         $transactions = Transaction::with('product','user')
-        ->where('type', $type)
+        ->where('type', $type)->orderBy('created_at', 'desc')
         ->paginate(20); 
         $us = User::all();
         $prod = Product::all();

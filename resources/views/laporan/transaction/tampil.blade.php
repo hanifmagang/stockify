@@ -144,7 +144,7 @@
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $transaction['type'] }}</div>
                             </td>
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-quantity">{{ $transaction['quantity'] }}</td>
-                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-date">{{ $transaction['date'] }}</td>
+                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-date">{{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}</td>
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-status">{{ $transaction['status'] }}</td>
                             
                             <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap mt-2 transaction-notes">

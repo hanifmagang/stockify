@@ -5,12 +5,6 @@
 <script>
     
 
-    function setDeleteTransaction(id, type) {
-        // Mengatur action form delete dengan ID  yang akan dihapus
-        const deleteForm = document.querySelector('#delete-user-modal form');
-        deleteForm.action = `/stock/transaction/delete/${type}/${id}`;
-    }
-
     function updateStatus(transactionId, newStatus) {
         // Mengirim permintaan untuk memperbarui status transaksi
         fetch(`/stock/transaction/update-status/${transactionId}`, {
@@ -158,7 +152,7 @@
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $transaction['type'] }}</div>
                             </td>
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-quantity">{{ $transaction['quantity'] }}</td>
-                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-date">{{ $transaction['date'] }}</td>
+                            <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-date">{{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}</td>
                             @if(auth()->user()->role === 'Manajer Gudang' || auth()->user()->role === 'Admin')
                             <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white transaction-status">{{ $transaction['status'] }}</td>
                             @endif
@@ -176,13 +170,15 @@
                             </td>
                             @if(Auth::check() && (Auth::user()->role == 'Manajer Gudang'))
                             <td class="p-4 space-x-2 whitespace-nowrap">
-                                <button type="button" data-modal-target="delete-transaction-modal" data-modal-toggle="delete-transaction-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900" onclick="setDeleteTransaction({{ $transaction['id'] }}, '{{ $transaction['type'] }}')">
+                                <button type="button" data-modal-target="delete-transaction-modal-{{ $transaction['id'] }}-{{ $transaction['type'] }}" data-modal-toggle="delete-transaction-modal-{{ $transaction['id'] }}-{{ $transaction['type'] }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                     Delete transaction
                                 </button>
                             </td>
                             @endif
                         </tr>
+                        <!-- Delete Transaction Modal -->
+                        @include('stock.transaction.delete')
                         @endforeach
                     </tbody>
                 </table>
@@ -243,7 +239,6 @@
 <!-- Add Transaction Modal -->
 @include('stock.transaction.tambah')
 
-<!-- Delete Transaction Modal -->
-@include('stock.transaction.delete')
+
 
 @endsection

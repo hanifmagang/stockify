@@ -336,10 +336,10 @@ use Carbon\Carbon; // Mengimpor Carbon
                           {{ $transaction['stockSementara'] }}
                       </td>
                       <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                          {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
+                          {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
                       </td>
                       <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                          {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
+                          {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
                       </td>
                       <td class="p-4 whitespace-nowrap">
                           @if($transaction['status'] === 'Dikeluarkan')
@@ -374,10 +374,10 @@ use Carbon\Carbon; // Mengimpor Carbon
                       @endif
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
+                      {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
+                      {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
                     </td>
                     <td class="p-4 whitespace-nowrap"> 
                         <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">{{ $transaction['status'] }}</span>
@@ -404,10 +404,10 @@ use Carbon\Carbon; // Mengimpor Carbon
                       @endif
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
+                      {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('H:i:s') }}
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      {{ $transaction['updated_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
+                      {{ $transaction['created_at']->setTimezone('Asia/Jakarta')->format('Y-m-d') }}
                     </td>
                     
                     <td class="p-4 whitespace-nowrap">
@@ -666,7 +666,7 @@ use Carbon\Carbon; // Mengimpor Carbon
   const stockPerMonth = Array(12).fill(0); // Array untuk menyimpan jumlah stok per bulan
 
   transactions.forEach(transaction => {
-      const month = new Date(transaction.created_at).getMonth(); // Mendapatkan bulan dari tanggal transaksi
+      const month = new Date(transaction.updated_at).getMonth(); // Mendapatkan bulan dari tanggal transaksi
       if (transaction.type === 'Masuk' && transaction.status === 'Diterima') {
           stockPerMonth[month] += transaction.quantity; // Menambahkan jumlah untuk transaksi masuk
       } else if (transaction.type === 'Keluar' && transaction.status === 'Dikeluarkan') {
